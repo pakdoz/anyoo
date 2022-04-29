@@ -11,11 +11,11 @@
 	<atom:link href="https://www.anyonecdn.com/comments/feed/" rel="self" type="application/rss+xml" />
 	<link>https://www.anyonecdn.com/</link>
 	<description>Free Secure CDN</description>
-	<lastBuildDate>Fri, 09 Jul 2021 07:35:56 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Apr 2022 02:58:53 +0000</lastBuildDate>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=5.7.2</generator>
+	<generator>https://wordpress.org/?v=5.9.3</generator>
 </channel>
 </rss>

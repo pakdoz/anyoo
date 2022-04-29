@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-<script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let i;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",i=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")&&this._isValidScriptType(i)?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}_isValidScriptType(e){return!e||""===e||"string"==typeof e&&["text/javascript","text/x-javascript","text/ecmascript","text/jscript","application/javascript","application/x-javascript","application/ecmascript","application/jscript","module"].includes(e.toLowerCase())}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){const n=e[t];Object.defineProperty(e,t,{get:n||function(){},set:n=>{e["rocket"+t]=n}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,i=document.createRange(),r=n.parentElement;let a=e.get(n);void 0===a&&(a=n.nextSibling,e.set(n,a));const o=document.createDocumentFragment();i.setStart(o,0),o.appendChild(i.createContextualFragment(t)),r.insertBefore(o,a)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","touchcancel","touchforcechange","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();
+<script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let r;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",r=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){let n=e[t];Object.defineProperty(e,t,{get:()=>n||function(){},set(r){e["rocket"+t]=n=r}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,r=document.createRange(),i=n.parentElement;let o=e.get(n);void 0===o&&(o=n.nextSibling,e.set(n,o));const a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),i.insertBefore(a,o)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();
 </script>
 	<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
 	<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
-	<!-- This site is optimized with the Yoast SEO plugin v16.6.1 - https://yoast.com/wordpress/plugins/seo/ -->
+	<!-- This site is optimized with the Yoast SEO plugin v18.6 - https://yoast.com/wordpress/plugins/seo/ -->
 	<title>AnyoneCDN - Free Secure CDN | Signup For Free Now!</title>
-	<meta name="description" content="AnyoneCDN has now partnered with cWatch by Comodo to provide Free CDN service with a high level of security features. Signup now, It&#039;s FREE!">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CMontserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CMontserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CMontserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap"></noscript>
+	<meta name="description" content="AnyoneCDN has now partnered with cWatch by Comodo to provide Free Secure CDN service with a high level of security features.">
 	<link rel="canonical" href="https://www.anyonecdn.com/">
 	<meta property="og:locale" content="en_US">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="AnyoneCDN - Free Secure CDN | Signup For Free Now!">
-	<meta property="og:description" content="AnyoneCDN has now partnered with cWatch by Comodo to provide Free CDN service with a high level of security features. Signup now, It&#039;s FREE!">
+	<meta property="og:description" content="AnyoneCDN has now partnered with cWatch by Comodo to provide Free Secure CDN service with a high level of security features.">
 	<meta property="og:url" content="https://www.anyonecdn.com/">
 	<meta property="og:site_name" content="AnyoneCDN">
-	<meta property="article:modified_time" content="2021-07-09T06:32:18+00:00">
+	<meta property="article:modified_time" content="2022-04-29T02:58:53+00:00">
 	<meta property="og:image" content="https://www.anyonecdn.com/wp-content/uploads/2021/06/hero.png">
 	<meta property="og:image:width" content="4000">
 	<meta property="og:image:height" content="2000">
+	<meta property="og:image:type" content="image/png">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:label1" content="Est. reading time">
-	<meta name="twitter:data1" content="7 minutes">
-	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.anyonecdn.com/#organization","name":"AnyoneCDN","url":"https://www.anyonecdn.com/","sameAs":[],"logo":{"@type":"ImageObject","@id":"https://www.anyonecdn.com/#logo","inLanguage":"en-US","url":"https://www.anyonecdn.com/wp-content/uploads/2021/06/logo-anyone.png","contentUrl":"https://www.anyonecdn.com/wp-content/uploads/2021/06/logo-anyone.png","width":300,"height":65,"caption":"AnyoneCDN"},"image":{"@id":"https://www.anyonecdn.com/#logo"}},{"@type":"WebSite","@id":"https://www.anyonecdn.com/#website","url":"https://www.anyonecdn.com/","name":"AnyoneCDN","description":"Free Secure CDN","publisher":{"@id":"https://www.anyonecdn.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.anyonecdn.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://www.anyonecdn.com/#primaryimage","inLanguage":"en-US","url":"https://www.anyonecdn.com/wp-content/uploads/2021/06/hero.png","contentUrl":"https://www.anyonecdn.com/wp-content/uploads/2021/06/hero.png","width":4000,"height":2000,"caption":"anyoneCDN"},{"@type":"WebPage","@id":"https://www.anyonecdn.com/#webpage","url":"https://www.anyonecdn.com/","name":"AnyoneCDN - Free Secure CDN | Signup For Free Now!","isPartOf":{"@id":"https://www.anyonecdn.com/#website"},"about":{"@id":"https://www.anyonecdn.com/#organization"},"primaryImageOfPage":{"@id":"https://www.anyonecdn.com/#primaryimage"},"datePublished":"2021-06-28T06:55:45+00:00","dateModified":"2021-07-09T06:32:18+00:00","description":"AnyoneCDN has now partnered with cWatch by Comodo to provide Free CDN service with a high level of security features. Signup now, It's FREE!","breadcrumb":{"@id":"https://www.anyonecdn.com/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.anyonecdn.com/"]}]},{"@type":"BreadcrumbList","@id":"https://www.anyonecdn.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]}]}</script>
+	<meta name="twitter:data1" content="8 minutes">
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.anyonecdn.com/#organization","name":"AnyoneCDN","url":"https://www.anyonecdn.com/","sameAs":[],"logo":{"@type":"ImageObject","@id":"https://www.anyonecdn.com/#logo","inLanguage":"en-US","url":"https://www.anyonecdn.com/wp-content/uploads/2021/06/logo-anyone.png","contentUrl":"https://www.anyonecdn.com/wp-content/uploads/2021/06/logo-anyone.png","width":300,"height":65,"caption":"AnyoneCDN"},"image":{"@id":"https://www.anyonecdn.com/#logo"}},{"@type":"WebSite","@id":"https://www.anyonecdn.com/#website","url":"https://www.anyonecdn.com/","name":"AnyoneCDN","description":"Free Secure CDN","publisher":{"@id":"https://www.anyonecdn.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.anyonecdn.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://www.anyonecdn.com/#primaryimage","inLanguage":"en-US","url":"https://www.anyonecdn.com/wp-content/uploads/2021/06/hero.png","contentUrl":"https://www.anyonecdn.com/wp-content/uploads/2021/06/hero.png","width":4000,"height":2000,"caption":"AnyoneCDN"},{"@type":"WebPage","@id":"https://www.anyonecdn.com/#webpage","url":"https://www.anyonecdn.com/","name":"AnyoneCDN - Free Secure CDN | Signup For Free Now!","isPartOf":{"@id":"https://www.anyonecdn.com/#website"},"about":{"@id":"https://www.anyonecdn.com/#organization"},"primaryImageOfPage":{"@id":"https://www.anyonecdn.com/#primaryimage"},"datePublished":"2021-06-28T06:55:45+00:00","dateModified":"2022-04-29T02:58:53+00:00","description":"AnyoneCDN has now partnered with cWatch by Comodo to provide Free Secure CDN service with a high level of security features.","breadcrumb":{"@id":"https://www.anyonecdn.com/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.anyonecdn.com/"]}]},{"@type":"BreadcrumbList","@id":"https://www.anyonecdn.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]}]}</script>
 	<!-- / Yoast SEO plugin. -->
 
 
-<link rel="dns-prefetch" href="//img.zpcdn.net">
 <link rel="dns-prefetch" href="//fonts.googleapis.com">
 <link rel="dns-prefetch" href="//fonts.gstatic.com">
 <link href="https://fonts.gstatic.com/" crossorigin rel="preconnect">
@@ -42,34 +45,40 @@ img.emoji {
 	box-shadow: none !important;
 	height: 1em !important;
 	width: 1em !important;
-	margin: 0 .07em !important;
+	margin: 0 0.07em !important;
 	vertical-align: -0.1em !important;
 	background: none !important;
 	padding: 0 !important;
 }</style>
-	<link rel="stylesheet" id="wp-block-library-css" href="https://www.anyonecdn.com/wp-includes/css/dist/block-library/style.min.css?ver=5.7.2" type="text/css" media="all">
-<link rel="stylesheet" id="hello-elementor-css" href="https://www.anyonecdn.com/wp-content/themes/hello-elementor/style.min.css?ver=2.4.1" type="text/css" media="all">
-<link rel="stylesheet" id="hello-elementor-theme-style-css" href="https://www.anyonecdn.com/wp-content/themes/hello-elementor/theme.min.css?ver=2.4.1" type="text/css" media="all">
-<link rel="stylesheet" id="elementor-icons-css" href="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/eicons/css/elementor-icons.min.css?ver=5.11.0" type="text/css" media="all">
-<link rel="stylesheet" id="elementor-animations-css" href="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/animations/animations.min.css?ver=3.2.5" type="text/css" media="all">
-<link rel="stylesheet" id="elementor-frontend-css" href="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/css/frontend.min.css?ver=3.2.5" type="text/css" media="all">
-<style id="elementor-frontend-inline-css" type="text/css">@font-face{font-family:eicons;src:url(https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.eot?5.10.0);src:url(https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.eot?5.10.0#iefix) format("embedded-opentype"),url(https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.woff2?5.10.0) format("woff2"),url(https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.woff?5.10.0) format("woff"),url(https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.ttf?5.10.0) format("truetype"),url(https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.svg?5.10.0#eicon) format("svg");font-weight:400;font-style:normal}</style>
-<link rel="stylesheet" id="elementor-post-6-css" href="https://www.anyonecdn.com/wp-content/uploads/elementor/css/post-6.css?ver=1624963944" type="text/css" media="all">
-<link rel="stylesheet" id="elementor-pro-css" href="https://www.anyonecdn.com/wp-content/plugins/elementor-pro/assets/css/frontend.min.css?ver=3.3.1" type="text/css" media="all">
-<link rel="stylesheet" id="elementor-global-css" href="https://www.anyonecdn.com/wp-content/uploads/elementor/css/global.css?ver=1624963944" type="text/css" media="all">
-<link rel="stylesheet" id="elementor-post-12-css" href="https://www.anyonecdn.com/wp-content/uploads/elementor/css/post-12.css?ver=1625812200" type="text/css" media="all">
-<link rel="stylesheet" id="elementor-post-14-css" href="https://www.anyonecdn.com/wp-content/uploads/elementor/css/post-14.css?ver=1625289107" type="text/css" media="all">
-<link rel="stylesheet" id="elementor-post-247-css" href="https://www.anyonecdn.com/wp-content/uploads/elementor/css/post-247.css?ver=1625289107" type="text/css" media="all">
-<link rel="stylesheet" id="elementor-post-377-css" href="https://www.anyonecdn.com/wp-content/uploads/elementor/css/post-377.css?ver=1624963945" type="text/css" media="all">
-<link rel="stylesheet" id="google-fonts-1-css" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto+Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CMontserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap&#038;ver=5.7.2" type="text/css" media="all">
-<link rel="stylesheet" id="elementor-icons-shared-0-css" href="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/font-awesome/css/fontawesome.min.css?ver=5.15.1" type="text/css" media="all">
-<link rel="stylesheet" id="elementor-icons-fa-solid-css" href="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/font-awesome/css/solid.min.css?ver=5.15.1" type="text/css" media="all">
+	<link rel="stylesheet" id="wp-block-library-css" href="https://www.anyonecdn.com/wp-includes/css/dist/block-library/style.min.css?ver=5.9.3" type="text/css" media="all">
+<style id="global-styles-inline-css" type="text/css">body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}</style>
+<link rel="stylesheet" id="hello-elementor-css" href="https://www.anyonecdn.com/wp-content/themes/hello-elementor/style.min.css?ver=2.5.0" type="text/css" media="all">
+<link rel="stylesheet" id="hello-elementor-theme-style-css" href="https://www.anyonecdn.com/wp-content/themes/hello-elementor/theme.min.css?ver=2.5.0" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-icons-css" href="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/eicons/css/elementor-icons.min.css?ver=5.15.0" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-frontend-css" href="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/css/frontend.min.css?ver=3.6.5" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-post-6-css" href="https://www.anyonecdn.com/wp-content/uploads/elementor/css/post-6.css?ver=1651084759" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-pro-css" href="https://www.anyonecdn.com/wp-content/plugins/elementor-pro/assets/css/frontend.min.css?ver=3.6.5" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-global-css" href="https://www.anyonecdn.com/wp-content/uploads/elementor/css/global.css?ver=1651084760" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-post-12-css" href="https://www.anyonecdn.com/wp-content/uploads/elementor/css/post-12.css?ver=1651201149" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-post-14-css" href="https://www.anyonecdn.com/wp-content/uploads/elementor/css/post-14.css?ver=1651084761" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-post-247-css" href="https://www.anyonecdn.com/wp-content/uploads/elementor/css/post-247.css?ver=1651084762" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-post-377-css" href="https://www.anyonecdn.com/wp-content/uploads/elementor/css/post-377.css?ver=1651084762" type="text/css" media="all">
+
+<link rel="stylesheet" id="elementor-icons-shared-0-css" href="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/font-awesome/css/fontawesome.min.css?ver=5.15.3" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-icons-fa-solid-css" href="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/font-awesome/css/solid.min.css?ver=5.15.3" type="text/css" media="all">
+<link rel="stylesheet" id="elementor-icons-fa-brands-css" href="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/font-awesome/css/brands.min.css?ver=5.15.3" type="text/css" media="all">
 <link rel="https://api.w.org/" href="https://www.anyonecdn.com/wp-json/">
 <link rel="alternate" type="application/json" href="https://www.anyonecdn.com/wp-json/wp/v2/pages/12">
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.anyonecdn.com/xmlrpc.php?rsd">
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.anyonecdn.com/wp-includes/wlwmanifest.xml"> 
-<meta name="generator" content="WordPress 5.7.2">
+<meta name="generator" content="WordPress 5.9.3">
 <link rel="shortlink" href="https://www.anyonecdn.com/">
+<script type="rocketlazyloadscript">
+  !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="520SJ92NCGuyOyr0J9cHBehQL3JxgaEy";;analytics.SNIPPET_VERSION="4.15.3";
+  analytics.load("520SJ92NCGuyOyr0J9cHBehQL3JxgaEy");
+  analytics.page();
+  }}();
+</script>
 <link rel="icon" href="https://www.anyonecdn.com/wp-content/uploads/2021/06/android-icon-192x192-1-150x150.png" sizes="32x32">
 <link rel="icon" href="https://www.anyonecdn.com/wp-content/uploads/2021/06/android-icon-192x192-1.png" sizes="192x192">
 <link rel="apple-touch-icon" href="https://www.anyonecdn.com/wp-content/uploads/2021/06/android-icon-192x192-1.png">
@@ -78,9 +87,8 @@ img.emoji {
 </head>
 <body class="home page-template page-template-elementor_header_footer page page-id-12 elementor-default elementor-template-full-width elementor-kit-6 elementor-page elementor-page-12">
 
-		<div data-elementor-type="header" data-elementor-id="14" class="elementor elementor-14 elementor-location-header" data-elementor-settings="[]">
-		<div class="elementor-section-wrap">
-					<header class="elementor-section elementor-top-section elementor-element elementor-element-15a2620d elementor-section-full_width elementor-section-height-min-height elementor-section-content-middle elementor-section-height-default elementor-section-items-middle" data-id="15a2620d" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-dark-grayscale"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0 0.49803921568627"></fefuncr><fefuncg type="table" tablevalues="0 0.49803921568627"></fefuncg><fefuncb type="table" tablevalues="0 0.49803921568627"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-grayscale"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0 1"></fefuncr><fefuncg type="table" tablevalues="0 1"></fefuncg><fefuncb type="table" tablevalues="0 1"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-purple-yellow"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0.54901960784314 0.98823529411765"></fefuncr><fefuncg type="table" tablevalues="0 1"></fefuncg><fefuncb type="table" tablevalues="0.71764705882353 0.25490196078431"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-blue-red"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0 1"></fefuncr><fefuncg type="table" tablevalues="0 0.27843137254902"></fefuncg><fefuncb type="table" tablevalues="0.5921568627451 0.27843137254902"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-midnight"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0 0"></fefuncr><fefuncg type="table" tablevalues="0 0.64705882352941"></fefuncg><fefuncb type="table" tablevalues="0 1"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-magenta-yellow"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0.78039215686275 1"></fefuncr><fefuncg type="table" tablevalues="0 0.94901960784314"></fefuncg><fefuncb type="table" tablevalues="0.35294117647059 0.47058823529412"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-purple-green"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0.65098039215686 0.40392156862745"></fefuncr><fefuncg type="table" tablevalues="0 1"></fefuncg><fefuncb type="table" tablevalues="0.44705882352941 0.4"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-blue-orange"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0.098039215686275 1"></fefuncr><fefuncg type="table" tablevalues="0 0.66274509803922"></fefuncg><fefuncb type="table" tablevalues="0.84705882352941 0.41960784313725"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg>		<div data-elementor-type="header" data-elementor-id="14" class="elementor elementor-14 elementor-location-header">
+								<header class="elementor-section elementor-top-section elementor-element elementor-element-15a2620d elementor-section-full_width elementor-section-height-min-height elementor-section-content-middle elementor-section-height-default elementor-section-items-middle" data-id="15a2620d" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 						<div class="elementor-container elementor-column-gap-no">
 					<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-5b6ae6c3" data-id="5b6ae6c3" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
@@ -94,21 +102,22 @@ img.emoji {
 		</div>
 				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-6bccd071" data-id="6bccd071" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-5558cd6d elementor-nav-menu--stretch elementor-widget__width-auto elementor-nav-menu__text-align-center elementor-nav-menu__align-right elementor-nav-menu--dropdown-tablet elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="5558cd6d" data-element_type="widget" data-settings="{&quot;full_width&quot;:&quot;stretch&quot;,&quot;layout&quot;:&quot;horizontal&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;fas fa-caret-down&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;toggle&quot;:&quot;burger&quot;}" data-widget_type="nav-menu.default">
+								<div class="elementor-element elementor-element-5558cd6d elementor-nav-menu--stretch elementor-widget__width-auto elementor-nav-menu__text-align-center elementor-nav-menu__align-right elementor-nav-menu--dropdown-tablet elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="5558cd6d" data-element_type="widget" data-settings="{&quot;full_width&quot;:&quot;stretch&quot;,&quot;layout&quot;:&quot;horizontal&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;i class=\&quot;fas fa-caret-down\&quot;&gt;&lt;\/i&gt;&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;toggle&quot;:&quot;burger&quot;}" data-widget_type="nav-menu.default">
 				<div class="elementor-widget-container">
-						<nav migration_allowed="1" migrated="0" role="navigation" class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-background e--animation-sweep-right"><ul id="menu-1-5558cd6d" class="elementor-nav-menu">
+						<nav migration_allowed="1" migrated="0" role="navigation" class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-background e--animation-sweep-right">
+				<ul id="menu-1-5558cd6d" class="elementor-nav-menu">
 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-12 current_page_item menu-item-69"><a href="https://www.anyonecdn.com/" aria-current="page" class="elementor-item elementor-item-active">Home</a></li>
 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-70">
 <a href="#" class="elementor-item elementor-item-anchor">Features</a>
 <ul class="sub-menu elementor-nav-menu--dropdown">
-	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-384"><a href="https://www.anyonecdn.com/advanced-threat-protection-web-application-firewall-waf/" class="elementor-sub-item">Web Application Firewall (WAF)</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-384"><a href="https://www.anyonecdn.com/web-application-firewall-waf/" class="elementor-sub-item">Web Application Firewall (WAF)</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-385"><a href="https://www.anyonecdn.com/content-delivery-network-cdn/" class="elementor-sub-item">Content Delivery Network (CDN)</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-386"><a href="https://www.anyonecdn.com/cyber-security-operations-center-csoc/" class="elementor-sub-item">Cyber Security Operations Center (CSOC)</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-387"><a href="https://www.anyonecdn.com/proactive-defense-response-security-information-event-management-siem/" class="elementor-sub-item">Security Information &#038; Event Management (SIEM)</a></li>
 </ul>
 </li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-479"><a href="https://www.anyonecdn.com/network-map/" class="elementor-item">Network Map</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-444"><a href="https://login.anyonecdn.com/submitticket.php?step=2&#038;deptid=1" class="elementor-item">Contact</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-509"><a href="https://www.anyonecdn.com/network-map/" class="elementor-item">Network Map</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-510"><a href="https://login.anyonecdn.com/submitticket.php?step=2&#038;deptid=1" class="elementor-item">Contact</a></li>
 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-71">
 <a href="#" class="elementor-item elementor-item-anchor">Login</a>
 <ul class="sub-menu elementor-nav-menu--dropdown">
@@ -116,24 +125,24 @@ img.emoji {
 	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-73"><a href="https://login.anyonecdn.com/clientarea.php" class="elementor-sub-item">Billing</a></li>
 </ul>
 </li>
-</ul></nav>
+</ul>			</nav>
 					<div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false">
-			<i class="eicon-menu-bar" aria-hidden="true" role="presentation"></i>
-			<span class="elementor-screen-only">Menu</span>
+			<i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--open eicon-menu-bar"></i><i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--close eicon-close"></i>			<span class="elementor-screen-only">Menu</span>
 		</div>
-			<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" role="navigation" aria-hidden="true"><ul id="menu-2-5558cd6d" class="elementor-nav-menu">
+			<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" role="navigation" aria-hidden="true">
+				<ul id="menu-2-5558cd6d" class="elementor-nav-menu">
 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-12 current_page_item menu-item-69"><a href="https://www.anyonecdn.com/" aria-current="page" class="elementor-item elementor-item-active" tabindex="-1">Home</a></li>
 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-70">
 <a href="#" class="elementor-item elementor-item-anchor" tabindex="-1">Features</a>
 <ul class="sub-menu elementor-nav-menu--dropdown">
-	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-384"><a href="https://www.anyonecdn.com/advanced-threat-protection-web-application-firewall-waf/" class="elementor-sub-item" tabindex="-1">Web Application Firewall (WAF)</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-384"><a href="https://www.anyonecdn.com/web-application-firewall-waf/" class="elementor-sub-item" tabindex="-1">Web Application Firewall (WAF)</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-385"><a href="https://www.anyonecdn.com/content-delivery-network-cdn/" class="elementor-sub-item" tabindex="-1">Content Delivery Network (CDN)</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-386"><a href="https://www.anyonecdn.com/cyber-security-operations-center-csoc/" class="elementor-sub-item" tabindex="-1">Cyber Security Operations Center (CSOC)</a></li>
 	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-387"><a href="https://www.anyonecdn.com/proactive-defense-response-security-information-event-management-siem/" class="elementor-sub-item" tabindex="-1">Security Information &#038; Event Management (SIEM)</a></li>
 </ul>
 </li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-479"><a href="https://www.anyonecdn.com/network-map/" class="elementor-item" tabindex="-1">Network Map</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-444"><a href="https://login.anyonecdn.com/submitticket.php?step=2&#038;deptid=1" class="elementor-item" tabindex="-1">Contact</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-509"><a href="https://www.anyonecdn.com/network-map/" class="elementor-item" tabindex="-1">Network Map</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-510"><a href="https://login.anyonecdn.com/submitticket.php?step=2&#038;deptid=1" class="elementor-item" tabindex="-1">Contact</a></li>
 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-71">
 <a href="#" class="elementor-item elementor-item-anchor" tabindex="-1">Login</a>
 <ul class="sub-menu elementor-nav-menu--dropdown">
@@ -141,7 +150,7 @@ img.emoji {
 	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-73"><a href="https://login.anyonecdn.com/clientarea.php" class="elementor-sub-item" tabindex="-1">Billing</a></li>
 </ul>
 </li>
-</ul></nav>
+</ul>			</nav>
 				</div>
 				</div>
 				<div class="elementor-element elementor-element-441157ab elementor-widget__width-auto elementor-widget elementor-widget-button" data-id="441157ab" data-element_type="widget" data-widget_type="button.default">
@@ -159,11 +168,9 @@ img.emoji {
 		</div>
 							</div>
 		</header>
-				</div>
-		</div>
-				<div data-elementor-type="wp-page" data-elementor-id="12" class="elementor elementor-12" data-elementor-settings="[]">
-							<div class="elementor-section-wrap">
-							<section class="elementor-section elementor-top-section elementor-element elementor-element-100c59e elementor-section-full_width elementor-section-height-min-height elementor-section-height-default elementor-section-items-middle" data-id="100c59e" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+						</div>
+				<div data-elementor-type="wp-page" data-elementor-id="12" class="elementor elementor-12">
+									<section class="elementor-section elementor-top-section elementor-element elementor-element-100c59e elementor-section-full_width elementor-section-height-min-height elementor-section-height-default elementor-section-items-middle" data-id="100c59e" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 						<div class="elementor-container elementor-column-gap-default">
 					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-b7b0dd7" data-id="b7b0dd7" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
@@ -173,7 +180,7 @@ img.emoji {
 				</div>
 				<div class="elementor-element elementor-element-4e66193 elementor-widget elementor-widget-text-editor" data-id="4e66193" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-								<p>AnyoneCDN has now partnered with cWatch by Comodo to provide a CDN service with a high level of security features.</p>						</div>
+							<p>AnyoneCDN has now partnered with cWatch by Comodo to provide a CDN service with a high level of security features.</p>						</div>
 				</div>
 				<div class="elementor-element elementor-element-12e38fd elementor-widget elementor-widget-spacer" data-id="12e38fd" data-element_type="widget" data-widget_type="spacer.default">
 				<div class="elementor-widget-container">
@@ -194,16 +201,14 @@ img.emoji {
 				<div class="elementor-widget-container">
 					<div class="elementor-image-carousel-wrapper swiper-container" dir="ltr">
 			<div class="elementor-image-carousel swiper-wrapper">
-				<div class="swiper-slide"><figure class="swiper-slide-inner"><img width="175" height="79" class="swiper-slide-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20175%2079'%3E%3C/svg%3E" alt="cWatch" data-lazy-src="https://www.anyonecdn.com/wp-content/uploads/2021/06/cwatch-logo.png"><noscript><img width="175" height="79" class="swiper-slide-image" src="https://www.anyonecdn.com/wp-content/uploads/2021/06/cwatch-logo.png" alt="cWatch"></noscript></figure></div>
+								<div class="swiper-slide"><figure class="swiper-slide-inner"><img width="175" height="79" class="swiper-slide-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20175%2079'%3E%3C/svg%3E" alt="cWatch" data-lazy-src="https://www.anyonecdn.com/wp-content/uploads/2021/06/cwatch-logo.png"><noscript><img width="175" height="79" class="swiper-slide-image" src="https://www.anyonecdn.com/wp-content/uploads/2021/06/cwatch-logo.png" alt="cWatch"></noscript></figure></div>
 <div class="swiper-slide"><figure class="swiper-slide-inner"><img width="226" height="54" class="swiper-slide-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20226%2054'%3E%3C/svg%3E" alt="Comodo" data-lazy-src="https://www.anyonecdn.com/wp-content/uploads/2021/06/comodo-logo.png"><noscript><img width="226" height="54" class="swiper-slide-image" src="https://www.anyonecdn.com/wp-content/uploads/2021/06/comodo-logo.png" alt="Comodo"></noscript></figure></div>
 <div class="swiper-slide"><figure class="swiper-slide-inner"><img width="300" height="90" class="swiper-slide-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2090'%3E%3C/svg%3E" alt="OWASP" data-lazy-src="https://www.anyonecdn.com/wp-content/uploads/2021/06/OWASP2-300x90.png"><noscript><img width="300" height="90" class="swiper-slide-image" src="https://www.anyonecdn.com/wp-content/uploads/2021/06/OWASP2-300x90.png" alt="OWASP"></noscript></figure></div>			</div>
 																<div class="elementor-swiper-button elementor-swiper-button-prev">
-						<i class="eicon-chevron-left" aria-hidden="true"></i>
-						<span class="elementor-screen-only">Previous</span>
+						<i aria-hidden="true" class="eicon-chevron-left"></i>						<span class="elementor-screen-only">Previous</span>
 					</div>
 					<div class="elementor-swiper-button elementor-swiper-button-next">
-						<i class="eicon-chevron-right" aria-hidden="true"></i>
-						<span class="elementor-screen-only">Next</span>
+						<i aria-hidden="true" class="eicon-chevron-right"></i>						<span class="elementor-screen-only">Next</span>
 					</div>
 									</div>
 				</div>
@@ -223,13 +228,13 @@ for Any Business, Any Budget</h2>		</div>
 				</div>
 				<div class="elementor-element elementor-element-d41ec84 elementor-widget elementor-widget-text-editor" data-id="d41ec84" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-								<p>Designed and powered by Comodo – a global leader in cyber security technology – cWatch Web is the only fully-managed website &amp; application security service that combines advanced threat intelligence, decades of real-world experience and deep human insight to deliver affordable, worry-free 24/7/365 security while also enhancing website performance, SEO rankings and maintaining PCI DSS compliancy. There’s no hardware to install and it can scale to meet your needs, size and budget.</p>						</div>
+							<p>Designed and powered by Comodo – a global leader in cyber security technology – cWatch Web is the only fully-managed website &amp; application security service that combines advanced threat intelligence, decades of real-world experience and deep human insight to deliver affordable, worry-free 24/7/365 security while also enhancing website performance, SEO rankings and maintaining PCI DSS compliancy. There’s no hardware to install and it can scale to meet your needs, size and budget.</p>						</div>
 				</div>
 				<section class="elementor-section elementor-inner-section elementor-element elementor-element-4657212 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="4657212" data-element_type="section">
 						<div class="elementor-container elementor-column-gap-wide">
 					<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-99075c1" data-id="99075c1" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-4f54814 elementor-view-framed elementor-shape-circle elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="4f54814" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-4f54814 elementor-view-framed elementor-shape-circle elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="4f54814" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -239,7 +244,8 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>24/7 Security & Protection</span>
+					<span>
+						24/7 Security & Protection					</span>
 				</h3>
 							</div>
 		</div>
@@ -249,7 +255,7 @@ for Any Business, Any Budget</h2>		</div>
 		</div>
 				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-99450e3" data-id="99450e3" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-c110e2a elementor-view-framed elementor-shape-circle elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="c110e2a" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-c110e2a elementor-view-framed elementor-shape-circle elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="c110e2a" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -259,7 +265,8 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>Improve Performance</span>
+					<span>
+						Improve Performance					</span>
 				</h3>
 							</div>
 		</div>
@@ -269,7 +276,7 @@ for Any Business, Any Budget</h2>		</div>
 		</div>
 				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-7465da7" data-id="7465da7" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-4ab05af elementor-view-framed elementor-shape-circle elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="4ab05af" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-4ab05af elementor-view-framed elementor-shape-circle elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="4ab05af" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -278,7 +285,8 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>Boost SEO Rankings</span>
+					<span>
+						Boost SEO Rankings					</span>
 				</h3>
 							</div>
 		</div>
@@ -288,7 +296,7 @@ for Any Business, Any Budget</h2>		</div>
 		</div>
 				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-f14d07a" data-id="f14d07a" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-0a3dd42 elementor-view-framed elementor-shape-circle elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="0a3dd42" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-0a3dd42 elementor-view-framed elementor-shape-circle elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="0a3dd42" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -297,7 +305,8 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>Reduce IT Risk & Cost</span>
+					<span>
+						Reduce IT Risk & Cost					</span>
 				</h3>
 							</div>
 		</div>
@@ -307,7 +316,7 @@ for Any Business, Any Budget</h2>		</div>
 		</div>
 				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-b8bb177" data-id="b8bb177" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-dfeb206 elementor-view-framed elementor-shape-circle elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="dfeb206" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-dfeb206 elementor-view-framed elementor-shape-circle elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="dfeb206" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -316,7 +325,8 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>Early Threat Detection</span>
+					<span>
+						Early Threat Detection					</span>
 				</h3>
 							</div>
 		</div>
@@ -326,7 +336,7 @@ for Any Business, Any Budget</h2>		</div>
 		</div>
 				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-9e41108" data-id="9e41108" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-b702e9d elementor-view-framed elementor-shape-circle elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="b702e9d" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-b702e9d elementor-view-framed elementor-shape-circle elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="b702e9d" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -335,7 +345,8 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>PCI DSS 6.6 Compliancy</span>
+					<span>
+						PCI DSS 6.6 Compliancy					</span>
 				</h3>
 							</div>
 		</div>
@@ -359,7 +370,7 @@ for Any Business, Any Budget</h2>		</div>
 				</div>
 				<div class="elementor-element elementor-element-d7bf2dd elementor-widget elementor-widget-text-editor" data-id="d7bf2dd" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-								<p>cWatch Web is a complete web security stack fully managed by cyber security experts. It’s designed to deliver max protection to your website or application to keep it safe from hackers, bots, SEO spam, DDoS attacks and much more, thanks to its unique combination of advanced security features in one easy-to-use solution. Upon simple setup, cWatch Web instantly keeps these threats in check.</p>						</div>
+							<p>cWatch Web is a complete web security stack fully managed by cyber security experts. It’s designed to deliver max protection to your website or application to keep it safe from hackers, bots, SEO spam, DDoS attacks and much more, thanks to its unique combination of advanced security features in one easy-to-use solution. Upon simple setup, cWatch Web instantly keeps these threats in check.</p>						</div>
 				</div>
 					</div>
 		</div>
@@ -369,7 +380,7 @@ for Any Business, Any Budget</h2>		</div>
 						<div class="elementor-container elementor-column-gap-default">
 					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-ebe96d6" data-id="ebe96d6" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-e56c7a6 elementor-view-framed elementor-shape-circle elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="e56c7a6" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-e56c7a6 elementor-view-framed elementor-shape-circle elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="e56c7a6" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -379,7 +390,8 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>Malware Attacks</span>
+					<span>
+						Malware Attacks					</span>
 				</h3>
 							</div>
 		</div>
@@ -389,7 +401,7 @@ for Any Business, Any Budget</h2>		</div>
 		</div>
 				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-4dc7300" data-id="4dc7300" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-d98a64c elementor-view-framed elementor-shape-circle elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="d98a64c" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-d98a64c elementor-view-framed elementor-shape-circle elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="d98a64c" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -398,7 +410,8 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>DDoS Attacks</span>
+					<span>
+						DDoS Attacks					</span>
 				</h3>
 							</div>
 		</div>
@@ -408,7 +421,7 @@ for Any Business, Any Budget</h2>		</div>
 		</div>
 				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-a717298" data-id="a717298" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-f69c44a elementor-view-framed elementor-shape-circle elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="f69c44a" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-f69c44a elementor-view-framed elementor-shape-circle elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="f69c44a" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -417,7 +430,8 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>Hackers & Spam Attacks</span>
+					<span>
+						Hackers & Spam Attacks					</span>
 				</h3>
 							</div>
 		</div>
@@ -431,7 +445,7 @@ for Any Business, Any Budget</h2>		</div>
 						<div class="elementor-container elementor-column-gap-default">
 					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-a4042e7" data-id="a4042e7" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-62eafb7 elementor-view-framed elementor-shape-circle elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="62eafb7" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-62eafb7 elementor-view-framed elementor-shape-circle elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="62eafb7" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -440,7 +454,8 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>Malicious Bots & Brute Force</span>
+					<span>
+						Malicious Bots & Brute Force					</span>
 				</h3>
 							</div>
 		</div>
@@ -450,7 +465,7 @@ for Any Business, Any Budget</h2>		</div>
 		</div>
 				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-4d43c31" data-id="4d43c31" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-2242181 elementor-view-framed elementor-shape-circle elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="2242181" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-2242181 elementor-view-framed elementor-shape-circle elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="2242181" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -460,7 +475,8 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>OWASP Top 10 Threats</span>
+					<span>
+						OWASP Top 10 Threats					</span>
 				</h3>
 							</div>
 		</div>
@@ -470,7 +486,7 @@ for Any Business, Any Budget</h2>		</div>
 		</div>
 				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-57d5cc7" data-id="57d5cc7" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-c009ad6 elementor-view-framed elementor-shape-circle elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="c009ad6" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-c009ad6 elementor-view-framed elementor-shape-circle elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="c009ad6" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -479,7 +495,8 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>Zero Day Attacks</span>
+					<span>
+						Zero Day Attacks					</span>
 				</h3>
 							</div>
 		</div>
@@ -505,7 +522,7 @@ for Any Business, Any Budget</h2>		</div>
 						<div class="elementor-container elementor-column-gap-default">
 					<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-2e281eab" data-id="2e281eab" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-be7bad9 elementor-view-default elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="be7bad9" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-be7bad9 elementor-view-default elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="be7bad9" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -514,18 +531,20 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>Cyber Security Operation Center (CSOC)</span>
+					<span>
+						Cyber Security Operation Center (CSOC)					</span>
 				</h3>
-								<p class="elementor-icon-box-description">24/7/365 surveillance, incident handling and response by humans.
+									<p class="elementor-icon-box-description">
+						24/7/365 surveillance, incident handling and response by humans.
 
-</p>
+					</p>
 							</div>
 		</div>
 				</div>
 				</div>
 				<div class="elementor-element elementor-element-0aa7e36 elementor-widget elementor-widget-text-editor" data-id="0aa7e36" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-								<ul>
+							<ul>
 <li>
 <strong>24x7x365 Professional Monitoring</strong><br>cWatch Web is supported by Comodo’s team of certified security specialists who continuously monitor and maintain the integrity of your website.</li>
 <li>
@@ -549,7 +568,7 @@ for Any Business, Any Budget</h2>		</div>
 		</div>
 				<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-6986dc1a" data-id="6986dc1a" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-3156ef2e elementor-view-default elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="3156ef2e" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-3156ef2e elementor-view-default elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="3156ef2e" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -558,18 +577,20 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>Content Delivery Network (CDN)</span>
+					<span>
+						Content Delivery Network (CDN)					</span>
 				</h3>
-								<p class="elementor-icon-box-description">Accelerated performance, higher SEO rankings & 29 global PoPs built to scale.
+									<p class="elementor-icon-box-description">
+						Accelerated performance, higher SEO rankings & 29 global PoPs built to scale.
 
-</p>
+					</p>
 							</div>
 		</div>
 				</div>
 				</div>
 				<div class="elementor-element elementor-element-d733e23 elementor-widget elementor-widget-text-editor" data-id="d733e23" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-								<ul>
+							<ul>
 <li>
 <strong>Higher SEO Ranking</strong><br>The cWatch Web content delivery network improves<br>the SEO ranking and security posture of your site.</li>
 <li>
@@ -597,7 +618,7 @@ for Any Business, Any Budget</h2>		</div>
 						<div class="elementor-container elementor-column-gap-default">
 					<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-11111af2" data-id="11111af2" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-276c068b elementor-view-default elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="276c068b" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-276c068b elementor-view-default elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="276c068b" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -606,16 +627,18 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>Advanced Threat Protection (WAF)</span>
+					<span>
+						Advanced Threat Protection (WAF)					</span>
 				</h3>
-								<p class="elementor-icon-box-description">Intrusion prevention system that analyzes, blocks or filters bad traffic and the latest threats.</p>
+									<p class="elementor-icon-box-description">
+						Intrusion prevention system that analyzes, blocks or filters bad traffic and the latest threats.					</p>
 							</div>
 		</div>
 				</div>
 				</div>
 				<div class="elementor-element elementor-element-bc60720 elementor-widget elementor-widget-text-editor" data-id="bc60720" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-								<ul>
+							<ul>
 <li>
 <strong>Malware Defense</strong><br>cWatch Web is designed to defend against malicious<br>code and deliver immediate alerts if an issue is<br>detected.</li>
 <li>
@@ -627,7 +650,7 @@ for Any Business, Any Budget</h2>		</div>
 				<div class="elementor-element elementor-element-cfc3ce0 elementor-align-center elementor-widget elementor-widget-button" data-id="cfc3ce0" data-element_type="widget" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-button-wrapper">
-			<a href="https://www.anyonecdn.com/advanced-threat-protection-web-application-firewall-waf/" class="elementor-button-link elementor-button elementor-size-xs" role="button">
+			<a href="https://www.anyonecdn.com/web-application-firewall-waf/" class="elementor-button-link elementor-button elementor-size-xs" role="button">
 						<span class="elementor-button-content-wrapper">
 						<span class="elementor-button-text">Learn More</span>
 		</span>
@@ -639,7 +662,7 @@ for Any Business, Any Budget</h2>		</div>
 		</div>
 				<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-70a4b0a2" data-id="70a4b0a2" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-78c44625 elementor-view-default elementor-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="78c44625" data-element_type="widget" data-widget_type="icon-box.default">
+								<div class="elementor-element elementor-element-78c44625 elementor-view-default elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box" data-id="78c44625" data-element_type="widget" data-widget_type="icon-box.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-icon-box-wrapper">
 						<div class="elementor-icon-box-icon">
@@ -648,16 +671,18 @@ for Any Business, Any Budget</h2>		</div>
 			</div>
 						<div class="elementor-icon-box-content">
 				<h3 class="elementor-icon-box-title">
-					<span>Proactive Defense and Response (SIEM)</span>
+					<span>
+						Proactive Defense and Response (SIEM)					</span>
 				</h3>
-								<p class="elementor-icon-box-description">Instant alerts & notifications upon detection of anything that could compromise your website.</p>
+									<p class="elementor-icon-box-description">
+						Instant alerts & notifications upon detection of anything that could compromise your website.					</p>
 							</div>
 		</div>
 				</div>
 				</div>
 				<div class="elementor-element elementor-element-468f425 elementor-widget elementor-widget-text-editor" data-id="468f425" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-								<ul>
+							<ul>
 <li>
 <strong>Worry-Free Managed Security</strong><br>Implementing cWatch is simple—we manage your security without the need for updates or maintenance.</li>
 <li>
@@ -709,7 +734,15 @@ Any Website, Any Budget</h2>		</div>
 				</div>
 				<div class="elementor-element elementor-element-b521955 elementor-widget elementor-widget-text-editor" data-id="b521955" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-								<p>Hiring an internal IT security team to monitor threats, identify risks and respond to incidents is completely out of range for most companies. But, with cWatch Web, you can instantly reap the benefits of fully managed security and innovative technology — built on 20 years of security intelligence and experience — at a price that won’t break your budget. Put your worries aside—get comprehensive security for less than $1 per day.</p>						</div>
+							<p>Hiring an internal IT security team to monitor threats, identify risks and respond to incidents is completely out of range for most companies. But, with cWatch Web, you can instantly reap the benefits of fully managed security and innovative technology — built on 20 years of security intelligence and experience — at a price that won’t break your budget. Put your worries aside—get comprehensive security for less than $1 per day.</p>						</div>
+				</div>
+				<div class="elementor-element elementor-element-8a0ad1e elementor-widget elementor-widget-heading" data-id="8a0ad1e" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h2 class="elementor-heading-title elementor-size-default">We accept Paypal & Crypto</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-afe4e57 elementor-widget elementor-widget-image" data-id="afe4e57" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img width="800" height="23" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%2023'%3E%3C/svg%3E" class="attachment-large size-large" alt="payments" data-lazy-srcset="https://www.anyonecdn.com/wp-content/uploads/2022/04/payments-1024x29.png 1024w, https://www.anyonecdn.com/wp-content/uploads/2022/04/payments-300x8.png 300w, https://www.anyonecdn.com/wp-content/uploads/2022/04/payments-768x22.png 768w, https://www.anyonecdn.com/wp-content/uploads/2022/04/payments-1536x43.png 1536w, https://www.anyonecdn.com/wp-content/uploads/2022/04/payments.png 1776w" data-lazy-sizes="(max-width: 800px) 100vw, 800px" data-lazy-src="https://www.anyonecdn.com/wp-content/uploads/2022/04/payments-1024x29.png"><noscript><img width="800" height="23" src="https://www.anyonecdn.com/wp-content/uploads/2022/04/payments-1024x29.png" class="attachment-large size-large" alt="payments" srcset="https://www.anyonecdn.com/wp-content/uploads/2022/04/payments-1024x29.png 1024w, https://www.anyonecdn.com/wp-content/uploads/2022/04/payments-300x8.png 300w, https://www.anyonecdn.com/wp-content/uploads/2022/04/payments-768x22.png 768w, https://www.anyonecdn.com/wp-content/uploads/2022/04/payments-1536x43.png 1536w, https://www.anyonecdn.com/wp-content/uploads/2022/04/payments.png 1776w" sizes="(max-width: 800px) 100vw, 800px"></noscript>															</div>
 				</div>
 					</div>
 		</div>
@@ -724,15 +757,18 @@ Any Website, Any Budget</h2>		</div>
 			
 		<div class="elementor-price-table">
 							<div class="elementor-price-table__header">
-											<h3 class="elementor-price-table__heading">Premium</h3>
+											<h3 class="elementor-price-table__heading">
+						CDN Premium						</h3>
 					
 									</div>
 			
 			<div class="elementor-price-table__price">
-								<span class="elementor-price-table__currency">&#36;</span>									<span class="elementor-price-table__integer-part">24</span>
+								<span class="elementor-price-table__currency">&#036;</span>									<span class="elementor-price-table__integer-part">
+						25					</span>
 				
 									<div class="elementor-price-table__after-price">
-						<span class="elementor-price-table__fractional-part">90</span>
+						<span class="elementor-price-table__fractional-part">
+							00						</span>
 
 											</div>
 				
@@ -744,7 +780,7 @@ Any Website, Any Budget</h2>		</div>
 							<div class="elementor-price-table__feature-inner">
 																		<i class="" aria-hidden="true"></i>
 																											<span>
-										1 Domain Coverage									</span>
+										Unlimited Domain Coverage									</span>
 																</div>
 						</li>
 											<li class="elementor-repeater-item-2af3de2">
@@ -765,14 +801,14 @@ Any Website, Any Budget</h2>		</div>
 							<div class="elementor-price-table__feature-inner">
 																		<i class="" aria-hidden="true"></i>
 																											<span>
-										Website Scanning Every 4 hours									</span>
+										Website Scanning Every 24 hours									</span>
 																</div>
 						</li>
 											<li class="elementor-repeater-item-1eb1e4d">
 							<div class="elementor-price-table__feature-inner">
 																		<i class="" aria-hidden="true"></i>
 																											<span>
-										Unlimited CDN Bandwidth									</span>
+										500 GB CDN Bandwidth									</span>
 																</div>
 						</li>
 											<li class="elementor-repeater-item-6318fb7">
@@ -785,21 +821,13 @@ Any Website, Any Budget</h2>		</div>
 											<li class="elementor-repeater-item-efd34f2">
 							<div class="elementor-price-table__feature-inner">
 																		<i class="" aria-hidden="true"></i>
-																											<span>
-										SIEM Detection									</span>
-																</div>
-						</li>
-											<li class="elementor-repeater-item-6f87e0d">
-							<div class="elementor-price-table__feature-inner">
-																		<i class="" aria-hidden="true"></i>
-																											<span>
-										Dedicated CSOC Security Analyst									</span>
-																</div>
+																		&nbsp;							</div>
 						</li>
 									</ul>
 			
 							<div class="elementor-price-table__footer">
-											<a class="elementor-price-table__button elementor-button elementor-size-md" href="https://login.anyonecdn.com/cart.php?a=add&#038;pid=4">Get 30 Days Trial</a>
+											<a class="elementor-price-table__button elementor-button elementor-size-md" href="https://login.anyonecdn.com/cart.php?a=add&#038;pid=7">
+							SIGNUP						</a>
 					
 									</div>
 					</div>
@@ -815,15 +843,18 @@ Any Website, Any Budget</h2>		</div>
 			
 		<div class="elementor-price-table">
 							<div class="elementor-price-table__header">
-											<h3 class="elementor-price-table__heading">Pro</h3>
+											<h3 class="elementor-price-table__heading">
+						Pro						</h3>
 					
 									</div>
 			
 			<div class="elementor-price-table__price">
-								<span class="elementor-price-table__currency">&#36;</span>									<span class="elementor-price-table__integer-part">9</span>
+								<span class="elementor-price-table__currency">&#036;</span>									<span class="elementor-price-table__integer-part">
+						9					</span>
 				
 									<div class="elementor-price-table__after-price">
-						<span class="elementor-price-table__fractional-part">99</span>
+						<span class="elementor-price-table__fractional-part">
+							99						</span>
 
 											</div>
 				
@@ -880,21 +911,18 @@ Any Website, Any Budget</h2>		</div>
 										SIEM Detection									</span>
 																</div>
 						</li>
-											<li class="elementor-repeater-item-6f87e0d">
-							<div class="elementor-price-table__feature-inner">
-																		<i class="" aria-hidden="true"></i>
-																		&nbsp;							</div>
-						</li>
 									</ul>
 			
 							<div class="elementor-price-table__footer">
-											<a class="elementor-price-table__button elementor-button elementor-size-md" href="https://login.anyonecdn.com/cart.php?a=add&#038;pid=3">Get 30 Days Trial</a>
+											<a class="elementor-price-table__button elementor-button elementor-size-md" href="https://login.anyonecdn.com/cart.php?a=add&#038;pid=3">
+							Get 30 Days Trial						</a>
 					
 									</div>
 					</div>
 
 					<div class="elementor-price-table__ribbon">
-				<div class="elementor-price-table__ribbon-inner">Popular</div>
+				<div class="elementor-price-table__ribbon-inner">
+					Popular				</div>
 			</div>
 					</div>
 				</div>
@@ -907,15 +935,18 @@ Any Website, Any Budget</h2>		</div>
 			
 		<div class="elementor-price-table">
 							<div class="elementor-price-table__header">
-											<h3 class="elementor-price-table__heading">Starter</h3>
+											<h3 class="elementor-price-table__heading">
+						Starter						</h3>
 					
 									</div>
 			
 			<div class="elementor-price-table__price">
-								<span class="elementor-price-table__currency">&#36;</span>									<span class="elementor-price-table__integer-part">2</span>
+								<span class="elementor-price-table__currency">&#036;</span>									<span class="elementor-price-table__integer-part">
+						2					</span>
 				
 									<div class="elementor-price-table__after-price">
-						<span class="elementor-price-table__fractional-part">99</span>
+						<span class="elementor-price-table__fractional-part">
+							99						</span>
 
 											</div>
 				
@@ -968,15 +999,11 @@ Any Website, Any Budget</h2>		</div>
 																		<i class="" aria-hidden="true"></i>
 																		&nbsp;							</div>
 						</li>
-											<li class="elementor-repeater-item-e0a6b49">
-							<div class="elementor-price-table__feature-inner">
-																		<i class="" aria-hidden="true"></i>
-																		&nbsp;							</div>
-						</li>
 									</ul>
 			
 							<div class="elementor-price-table__footer">
-											<a class="elementor-price-table__button elementor-button elementor-size-md" href="https://login.anyonecdn.com/cart.php?a=add&#038;pid=2">SIGNUP</a>
+											<a class="elementor-price-table__button elementor-button elementor-size-md" href="https://login.anyonecdn.com/cart.php?a=add&#038;pid=2">
+							SIGNUP						</a>
 					
 									</div>
 					</div>
@@ -992,15 +1019,18 @@ Any Website, Any Budget</h2>		</div>
 			
 		<div class="elementor-price-table">
 							<div class="elementor-price-table__header">
-											<h3 class="elementor-price-table__heading">Basic</h3>
+											<h3 class="elementor-price-table__heading">
+						Basic						</h3>
 					
 									</div>
 			
 			<div class="elementor-price-table__price">
-								<span class="elementor-price-table__currency">&#36;</span>									<span class="elementor-price-table__integer-part">0</span>
+								<span class="elementor-price-table__currency">&#036;</span>									<span class="elementor-price-table__integer-part">
+						0					</span>
 				
 									<div class="elementor-price-table__after-price">
-						<span class="elementor-price-table__fractional-part">00</span>
+						<span class="elementor-price-table__fractional-part">
+							00						</span>
 
 											</div>
 				
@@ -1008,6 +1038,13 @@ Any Website, Any Budget</h2>		</div>
 									<span class="elementor-price-table__period elementor-typo-excluded">Month</span>							</div>
 
 							<ul class="elementor-price-table__features-list">
+											<li class="elementor-repeater-item-6f87e0d">
+							<div class="elementor-price-table__feature-inner">
+																		<i class="" aria-hidden="true"></i>
+																											<span>
+										$2.99 One Time Fee									</span>
+																</div>
+						</li>
 											<li class="elementor-repeater-item-c1e67b1">
 							<div class="elementor-price-table__feature-inner">
 																		<i class="" aria-hidden="true"></i>
@@ -1040,28 +1077,18 @@ Any Website, Any Budget</h2>		</div>
 							<div class="elementor-price-table__feature-inner">
 																		<i class="" aria-hidden="true"></i>
 																											<span>
-										Fair Usage CDN Bandwidth									</span>
+										Unlimited CDN Bandwidth									</span>
 																</div>
 						</li>
-											<li class="elementor-repeater-item-6f87e0d">
+											<li class="elementor-repeater-item-9077176">
 							<div class="elementor-price-table__feature-inner">
-																		<i class="" aria-hidden="true"></i>
-																		&nbsp;							</div>
-						</li>
-											<li class="elementor-repeater-item-5b23668">
-							<div class="elementor-price-table__feature-inner">
-																		<i class="" aria-hidden="true"></i>
-																		&nbsp;							</div>
-						</li>
-											<li class="elementor-repeater-item-9c36d96">
-							<div class="elementor-price-table__feature-inner">
-																		<i class="" aria-hidden="true"></i>
-																		&nbsp;							</div>
+																&nbsp;							</div>
 						</li>
 									</ul>
 			
 							<div class="elementor-price-table__footer">
-											<a class="elementor-price-table__button elementor-button elementor-size-md" href="https://login.anyonecdn.com/cart.php?a=add&#038;pid=1">SIGNUP</a>
+											<a class="elementor-price-table__button elementor-button elementor-size-md" href="https://login.anyonecdn.com/cart.php?a=add&#038;pid=1">
+							SIGNUP						</a>
 					
 									</div>
 					</div>
@@ -1087,6 +1114,7 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">Malware Clean & Repair </a>
 					</div>
+
 					<div id="elementor-tab-content-1301" class="elementor-tab-content elementor-clearfix" data-tab="1" role="tabpanel" aria-labelledby="elementor-tab-title-1301"><ul>
 <li>Hack Repair </li>
 <li>Full Blacklist Removal </li>
@@ -1111,6 +1139,7 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">SIEM Detection</a>
 					</div>
+
 					<div id="elementor-tab-content-1302" class="elementor-tab-content elementor-clearfix" data-tab="2" role="tabpanel" aria-labelledby="elementor-tab-title-1302"><ul>
 <li>Real time threat and breach protection </li>
 <li>Advanced persistent threat indentification</li>
@@ -1126,14 +1155,14 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">CSOC Response</a>
 					</div>
+
 					<div id="elementor-tab-content-1303" class="elementor-tab-content elementor-clearfix" data-tab="3" role="tabpanel" aria-labelledby="elementor-tab-title-1303"><ul>
-<li>Dedicated c.s.o.c. analyst </li>
-<li>Expert tuning and configuration mgmt. </li>
-<li>Reverse malware and suspect engineering </li>
-<li>Threat investigation and analysis </li>
-<li>Correlations over multiple incidents </li>
+<li>Expert tuning and configuration mgmt.</li>
+<li>Reverse malware and suspect engineering</li>
+<li>Threat investigation and analysis</li>
+<li>Correlations over multiple incidents</li>
 <li>Integration with threat intelligence</li>
-<li>Alerting and incident escalations </li>
+<li>Alerting and incident escalations</li>
 </ul></div>
 				</div>
 							<div class="elementor-toggle-item">
@@ -1144,6 +1173,7 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">WAF Protection</a>
 					</div>
+
 					<div id="elementor-tab-content-1304" class="elementor-tab-content elementor-clearfix" data-tab="4" role="tabpanel" aria-labelledby="elementor-tab-title-1304"><ul>
 <li>Fully managed updates </li>
 <li>Fine grained control </li>
@@ -1170,6 +1200,7 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">CDN Performance</a>
 					</div>
+
 					<div id="elementor-tab-content-1305" class="elementor-tab-content elementor-clearfix" data-tab="5" role="tabpanel" aria-labelledby="elementor-tab-title-1305"><ul>
 <li>Layer 3, 4, 5, 6 DDoS protection </li>
 <li>Layer 7 DDoS protection </li>
@@ -1204,6 +1235,7 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">Malware Clean & Repair </a>
 					</div>
+
 					<div id="elementor-tab-content-1681" class="elementor-tab-content elementor-clearfix" data-tab="1" role="tabpanel" aria-labelledby="elementor-tab-title-1681"><ul>
 <li>Hack Repair </li>
 <li>Full Blacklist Removal </li>
@@ -1228,6 +1260,7 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">SIEM Detection</a>
 					</div>
+
 					<div id="elementor-tab-content-1682" class="elementor-tab-content elementor-clearfix" data-tab="2" role="tabpanel" aria-labelledby="elementor-tab-title-1682"><ul>
 <li>Real time threat and breach protection </li>
 <li>Advanced persistent threat indentification</li>
@@ -1243,6 +1276,7 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">CSOC Response</a>
 					</div>
+
 					<div id="elementor-tab-content-1683" class="elementor-tab-content elementor-clearfix" data-tab="3" role="tabpanel" aria-labelledby="elementor-tab-title-1683"><ul>
 <li>Expert tuning and configuration mgmt.</li>
 <li>Reverse malware and suspect engineering</li>
@@ -1260,6 +1294,7 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">WAF Protection</a>
 					</div>
+
 					<div id="elementor-tab-content-1684" class="elementor-tab-content elementor-clearfix" data-tab="4" role="tabpanel" aria-labelledby="elementor-tab-title-1684"><ul>
 <li>Fully managed updates</li>
 <li>Bot protection </li>
@@ -1284,6 +1319,7 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">CDN Performance</a>
 					</div>
+
 					<div id="elementor-tab-content-1685" class="elementor-tab-content elementor-clearfix" data-tab="5" role="tabpanel" aria-labelledby="elementor-tab-title-1685"><ul>
 <li>Layer 3, 4, 5, 6 DDoS protection </li>
 <li>Layer 7 DDoS protection </li>
@@ -1318,6 +1354,7 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">Malware Clean & Repair </a>
 					</div>
+
 					<div id="elementor-tab-content-2361" class="elementor-tab-content elementor-clearfix" data-tab="1" role="tabpanel" aria-labelledby="elementor-tab-title-2361"><ul>
 <li>Hack Repair</li>
 <li>Spam &amp; Website Filtering</li>
@@ -1341,6 +1378,7 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">CSOC Response</a>
 					</div>
+
 					<div id="elementor-tab-content-2362" class="elementor-tab-content elementor-clearfix" data-tab="2" role="tabpanel" aria-labelledby="elementor-tab-title-2362"><ul>
 <li>Expert tuning and configuration mgmt.</li>
 <li>Reverse malware and suspect engineering</li>
@@ -1358,6 +1396,7 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">CDN Performance</a>
 					</div>
+
 					<div id="elementor-tab-content-2363" class="elementor-tab-content elementor-clearfix" data-tab="3" role="tabpanel" aria-labelledby="elementor-tab-title-2363"><ul>
 <li>Layer 3, 4, 5, 6 DDoS protection </li>
 <li>Layer 7 DDoS protection </li>
@@ -1392,8 +1431,8 @@ Any Website, Any Budget</h2>		</div>
 													</span>
 												<a class="elementor-toggle-title">Malware Clean & Repair </a>
 					</div>
+
 					<div id="elementor-tab-content-9621" class="elementor-tab-content elementor-clearfix" data-tab="1" role="tabpanel" aria-labelledby="elementor-tab-title-9621"><ul>
-<li>Hack Repair</li>
 <li>Spam &amp; Website Filtering</li>
 <li>Continuous Malware &amp; Hack Detection Scan</li>
 <li>Daily Vulnerability (OWASP) Detection Scan</li>
@@ -1413,26 +1452,10 @@ Any Website, Any Budget</h2>		</div>
 															<span class="elementor-toggle-icon-closed"><i class="fas fa-caret-right"></i></span>
 								<span class="elementor-toggle-icon-opened"><i class="elementor-toggle-icon-opened fas fa-caret-up"></i></span>
 													</span>
-												<a class="elementor-toggle-title">CSOC Response</a>
-					</div>
-					<div id="elementor-tab-content-9622" class="elementor-tab-content elementor-clearfix" data-tab="2" role="tabpanel" aria-labelledby="elementor-tab-title-9622"><ul>
-<li>Expert tuning and configuration mgmt.</li>
-<li>Reverse malware and suspect engineering</li>
-<li>Threat investigation and analysis</li>
-<li>Correlations over multiple incidents</li>
-<li>Integration with threat intelligence</li>
-<li>Alerting and incident escalations</li>
-</ul></div>
-				</div>
-							<div class="elementor-toggle-item">
-					<div id="elementor-tab-title-9623" class="elementor-tab-title" data-tab="3" role="tab" aria-controls="elementor-tab-content-9623" aria-expanded="false">
-												<span class="elementor-toggle-icon elementor-toggle-icon-left" aria-hidden="true">
-															<span class="elementor-toggle-icon-closed"><i class="fas fa-caret-right"></i></span>
-								<span class="elementor-toggle-icon-opened"><i class="elementor-toggle-icon-opened fas fa-caret-up"></i></span>
-													</span>
 												<a class="elementor-toggle-title">CDN Performance</a>
 					</div>
-					<div id="elementor-tab-content-9623" class="elementor-tab-content elementor-clearfix" data-tab="3" role="tabpanel" aria-labelledby="elementor-tab-title-9623"><ul>
+
+					<div id="elementor-tab-content-9622" class="elementor-tab-content elementor-clearfix" data-tab="2" role="tabpanel" aria-labelledby="elementor-tab-title-9622"><ul>
 <li>Layer 3, 4, 5, 6 DDoS protection </li>
 <li>Layer 7 DDoS protection </li>
 <li>Instant cache purge </li>
@@ -1459,11 +1482,9 @@ Any Website, Any Budget</h2>		</div>
 		</div>
 							</div>
 		</section>
-						</div>
-					</div>
-				<div data-elementor-type="footer" data-elementor-id="247" class="elementor elementor-247 elementor-location-footer" data-elementor-settings="[]">
-		<div class="elementor-section-wrap">
-					<section class="elementor-section elementor-top-section elementor-element elementor-element-43c3d4f elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="43c3d4f" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+							</div>
+				<div data-elementor-type="footer" data-elementor-id="247" class="elementor elementor-247 elementor-location-footer">
+								<section class="elementor-section elementor-top-section elementor-element elementor-element-43c3d4f elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="43c3d4f" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 						<div class="elementor-container elementor-column-gap-default">
 					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-34eca6f" data-id="34eca6f" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
@@ -1492,7 +1513,10 @@ Any Website, Any Budget</h2>		</div>
 			
 			<div class="elementor-form-fields-wrapper elementor-labels-">
 								<div class="elementor-field-type-email elementor-field-group elementor-column elementor-field-group-email elementor-col-75 elementor-field-required">
-					<label for="form-field-email" class="elementor-field-label elementor-screen-only">Email</label><input size="1" type="email" name="form_fields[email]" id="form-field-email" class="elementor-field elementor-size-md  elementor-field-textual" placeholder="Enter your email to join our mailing list" required="required" aria-required="true">				</div>
+												<label for="form-field-email" class="elementor-field-label elementor-screen-only">
+								Email							</label>
+														<input size="1" type="email" name="form_fields[email]" id="form-field-email" class="elementor-field elementor-size-md  elementor-field-textual" placeholder="Enter your email to join our mailing list" required="required" aria-required="true">
+											</div>
 								<div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-25 e-form__buttons">
 					<button type="submit" class="elementor-button elementor-size-md">
 						<span>
@@ -1524,7 +1548,28 @@ Any Website, Any Budget</h2>		</div>
 			<div class="elementor-widget-wrap elementor-element-populated">
 								<div class="elementor-element elementor-element-9af5471 elementor-widget__width-auto elementor-widget-mobile__width-inherit elementor-widget elementor-widget-heading" data-id="9af5471" data-element_type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-			<h2 class="elementor-heading-title elementor-size-default"><a href="https://www.anyonecdn.com/privacy-policy/">Privacy Policy</a></h2>		</div>
+			<h2 class="elementor-heading-title elementor-size-default">Follow Us</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-75e6c63 elementor-icon-list--layout-inline elementor-widget__width-auto elementor-mobile-align-center elementor-widget-mobile__width-inherit elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="75e6c63" data-element_type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+					<ul class="elementor-icon-list-items elementor-inline-items">
+							<li class="elementor-icon-list-item elementor-inline-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fab fa-facebook-square"></i>						</span>
+										<span class="elementor-icon-list-text"></span>
+									</li>
+								<li class="elementor-icon-list-item elementor-inline-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fab fa-twitter-square"></i>						</span>
+										<span class="elementor-icon-list-text"></span>
+									</li>
+								<li class="elementor-icon-list-item elementor-inline-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fab fa-linkedin"></i>						</span>
+										<span class="elementor-icon-list-text"></span>
+									</li>
+						</ul>
+				</div>
 				</div>
 					</div>
 		</div>
@@ -1543,12 +1588,10 @@ Any Website, Any Budget</h2>		</div>
 		</div>
 							</div>
 		</section>
-				</div>
-		</div>
+						</div>
 		
 		<div data-elementor-type="popup" data-elementor-id="377" class="elementor elementor-377 elementor-location-popup" data-elementor-settings="{&quot;triggers&quot;:{&quot;page_load&quot;:&quot;yes&quot;,&quot;page_load_delay&quot;:0},&quot;timing&quot;:[]}">
-		<div class="elementor-section-wrap">
-					<section class="elementor-section elementor-top-section elementor-element elementor-element-4de80bf elementor-section-content-middle elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="4de80bf" data-element_type="section">
+								<section class="elementor-section elementor-top-section elementor-element elementor-element-4de80bf elementor-section-content-middle elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="4de80bf" data-element_type="section">
 						<div class="elementor-container elementor-column-gap-default">
 					<div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-6846a1a9" data-id="6846a1a9" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
@@ -1583,9 +1626,9 @@ Any Website, Any Budget</h2>		</div>
 		</div>
 							</div>
 		</section>
-				</div>
-		</div>
-		<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="rocket-browser-checker-js-after">
+						</div>
+		<link rel="stylesheet" id="e-animations-css" href="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/animations/animations.min.css?ver=3.6.5" type="text/css" media="all">
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="rocket-browser-checker-js-after">
 "use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
 </script>
 <script type="text/javascript" id="rocket-preload-links-js-extra">
@@ -1598,34 +1641,46 @@ var RocketPreloadLinksConfig = {"excludeUris":"\/(.+\/)?feed\/?.+\/?|\/(?:.+\/)?
 "use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
 }());
 </script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-includes/js/jquery/jquery.min.js?ver=3.5.1" id="jquery-core-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0" id="jquery-core-js" defer></script>
 <script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2" id="jquery-migrate-js" defer></script>
 <script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js?ver=1.0.1" id="smartmenus-js" defer></script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js?ver=3.3.1" id="elementor-pro-webpack-runtime-js" defer></script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.2.5" id="elementor-webpack-runtime-js" defer></script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.2.5" id="elementor-frontend-modules-js" defer></script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor-pro/assets/lib/sticky/jquery.sticky.min.js?ver=3.3.1" id="elementor-sticky-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js?ver=3.6.5" id="elementor-pro-webpack-runtime-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.6.5" id="elementor-webpack-runtime-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.6.5" id="elementor-frontend-modules-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.9" id="regenerator-runtime-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0" id="wp-polyfill-js"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-includes/js/dist/hooks.min.js?ver=1e58c8c5a32b2e97491080c5b10dc71c" id="wp-hooks-js"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-includes/js/dist/i18n.min.js?ver=30fcecb428a0e8383d3776bcdd3a7834" id="wp-i18n-js"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="wp-i18n-js-after">
+wp.i18n.setLocaleData( { 'text directionltr': [ 'ltr' ] } );
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="elementor-pro-frontend-js-translations">
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "elementor-pro", { "locale_data": { "messages": { "": {} } } } );
+</script>
 <script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="elementor-pro-frontend-js-before">
-var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.anyonecdn.com\/wp-admin\/admin-ajax.php","nonce":"d060f527d5","urls":{"assets":"https:\/\/www.anyonecdn.com\/wp-content\/plugins\/elementor-pro\/assets\/"},"i18n":{"toc_no_headings_found":"No headings were found on this page."},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"google":{"title":"Google+","has_counter":true},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"}},"facebook_sdk":{"lang":"en_US","app_id":""},"lottie":{"defaultAnimationUrl":"https:\/\/www.anyonecdn.com\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}};
+var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.anyonecdn.com\/wp-admin\/admin-ajax.php","nonce":"df9ec23e0b","urls":{"assets":"https:\/\/www.anyonecdn.com\/wp-content\/plugins\/elementor-pro\/assets\/","rest":"https:\/\/www.anyonecdn.com\/wp-json\/"},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"}},"facebook_sdk":{"lang":"en_US","app_id":""},"lottie":{"defaultAnimationUrl":"https:\/\/www.anyonecdn.com\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}};
 </script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.3.1" id="elementor-pro-frontend-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.6.5" id="elementor-pro-frontend-js" defer></script>
 <script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/waypoints/waypoints.min.js?ver=4.0.2" id="elementor-waypoints-js" defer></script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-includes/js/jquery/ui/core.min.js?ver=1.12.1" id="jquery-ui-core-js" defer></script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/swiper/swiper.min.js?ver=5.3.6" id="swiper-js" defer></script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/share-link/share-link.min.js?ver=3.2.5" id="share-link-js" defer></script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/lib/dialog/dialog.min.js?ver=4.8.1" id="elementor-dialog-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-includes/js/jquery/ui/core.min.js?ver=1.13.1" id="jquery-ui-core-js" defer></script>
 <script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="elementor-frontend-js-before">
-var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Share on Facebook","shareOnTwitter":"Share on Twitter","pinIt":"Pin it","download":"Download","downloadImage":"Download image","fullscreen":"Fullscreen","zoom":"Zoom","share":"Share","playVideo":"Play Video","previous":"Previous","next":"Next","close":"Close"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile","value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Extra","value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet","value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Extra","value":1365,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1620,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"direction":"min","is_enabled":false}}},"version":"3.2.5","is_static":false,"experimentalFeatures":{"e_dom_optimization":true,"a11y_improvements":true,"landing-pages":true,"form-submissions":true,"video-playlist":true},"urls":{"assets":"https:\/\/www.anyonecdn.com\/wp-content\/plugins\/elementor\/assets\/"},"settings":{"page":[],"editorPreferences":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":12,"title":"AnyoneCDN%20%E2%80%93%20Free%20Secure%20CDN","excerpt":"","featuredImage":"https:\/\/www.anyonecdn.com\/wp-content\/uploads\/2021\/06\/hero-1024x512.png"}};
+var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Share on Facebook","shareOnTwitter":"Share on Twitter","pinIt":"Pin it","download":"Download","downloadImage":"Download image","fullscreen":"Fullscreen","zoom":"Zoom","share":"Share","playVideo":"Play Video","previous":"Previous","next":"Next","close":"Close"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Extra","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Extra","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}}},"version":"3.6.5","is_static":false,"experimentalFeatures":{"e_dom_optimization":true,"e_optimized_assets_loading":true,"a11y_improvements":true,"e_import_export":true,"e_hidden_wordpress_widgets":true,"theme_builder_v2":true,"landing-pages":true,"elements-color-picker":true,"favorite-widgets":true,"admin-top-bar":true,"page-transitions":true,"e_scroll_snap":true},"urls":{"assets":"https:\/\/www.anyonecdn.com\/wp-content\/plugins\/elementor\/assets\/"},"settings":{"page":[],"editorPreferences":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":12,"title":"AnyoneCDN%20-%20Free%20Secure%20CDN%20%7C%20Signup%20For%20Free%20Now%21","excerpt":"","featuredImage":"https:\/\/www.anyonecdn.com\/wp-content\/uploads\/2021\/06\/hero-1024x512.png"}};
 </script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.2.5" id="elementor-frontend-js" defer></script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor-pro/assets/js/preloaded-elements-handlers.min.js?ver=3.3.1" id="pro-preloaded-elements-handlers-js" defer></script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/js/preloaded-modules.min.js?ver=3.2.5" id="preloaded-modules-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.6.5" id="elementor-frontend-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.anyonecdn.com/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js?ver=3.6.5" id="pro-elements-handlers-js" defer></script>
+<a href="https://cww.verifytrustseal.com/verification/
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb21haW5JZCI6IjE1OTI0MSIsInRoZW1lIjoiZGFyayIsImhvc3RuYW1lIjoibG9naW4uY3dhdGNoLmNvbW9kby5jb20iLCJsYW5ndWFnZSI6ImVuIiwiaWF0IjoxNjUwOTM1NDc3fQ.Dqo-PoCGPy3Vl2zBegFXN0rvWuvBvJzxOV_pTSy6HjU?clang=en" target="_blank"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" style="max-width:240; max-height:120; position:fixed; right:0px; bottom:0px; z-index:9999" alt="cww trust seal" data-lazy-src="https://cww.verifytrustseal.com/seal/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb21haW5JZCI6IjE1OTI0MSIsInRoZW1lIjoiZGFyayIsImhvc3RuYW1lIjoibG9naW4uY3dhdGNoLmNvbW9kby5jb20iLCJsYW5ndWFnZSI6ImVuIiwiaWF0IjoxNjUwOTM1NDc3fQ.Dqo-PoCGPy3Vl2zBegFXN0rvWuvBvJzxOV_pTSy6HjU?clang=en"><noscript><img src="https://cww.verifytrustseal.com/seal/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb21haW5JZCI6IjE1OTI0MSIsInRoZW1lIjoiZGFyayIsImhvc3RuYW1lIjoibG9naW4uY3dhdGNoLmNvbW9kby5jb20iLCJsYW5ndWFnZSI6ImVuIiwiaWF0IjoxNjUwOTM1NDc3fQ.Dqo-PoCGPy3Vl2zBegFXN0rvWuvBvJzxOV_pTSy6HjU?clang=en" style="max-width:240; max-height:120; position:fixed; right:0px; bottom:0px; z-index:9999" alt="cww trust seal"></noscript></a>
 <script>window.lazyLoadOptions={elements_selector:"img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
 if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
 images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
 if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://www.anyonecdn.com/wp-content/plugins/wp-rocket/assets/js/lazyload/16.1/lazyload.min.js"></script>
+<script>class RocketElementorAnimation{constructor(){this.deviceMode=document.createElement("span"),this.deviceMode.id="elementor-device-mode",this.deviceMode.setAttribute("class","elementor-screen-only"),document.body.appendChild(this.deviceMode)}_detectAnimations(){let t=getComputedStyle(this.deviceMode,":after").content.replace(/"/g,"");this.animationSettingKeys=this._listAnimationSettingsKeys(t),document.querySelectorAll(".elementor-invisible[data-settings]").forEach(t=>{const e=t.getBoundingClientRect();if(e.bottom>=0&&e.top<=window.innerHeight)try{this._animateElement(t)}catch(t){}})}_animateElement(t){const e=JSON.parse(t.dataset.settings),i=e._animation_delay||e.animation_delay||0,n=e[this.animationSettingKeys.find(t=>e[t])];if("none"===n)return void t.classList.remove("elementor-invisible");t.classList.remove(n),this.currentAnimation&&t.classList.remove(this.currentAnimation),this.currentAnimation=n;let s=setTimeout(()=>{t.classList.remove("elementor-invisible"),t.classList.add("animated",n),this._removeAnimationSettings(t,e)},i);window.addEventListener("rocket-startLoading",function(){clearTimeout(s)})}_listAnimationSettingsKeys(t="mobile"){const e=[""];switch(t){case"mobile":e.unshift("_mobile");case"tablet":e.unshift("_tablet");case"desktop":e.unshift("_desktop")}const i=[];return["animation","_animation"].forEach(t=>{e.forEach(e=>{i.push(t+e)})}),i}_removeAnimationSettings(t,e){this._listAnimationSettingsKeys().forEach(t=>delete e[t]),t.dataset.settings=JSON.stringify(e)}static run(){const t=new RocketElementorAnimation;requestAnimationFrame(t._detectAnimations.bind(t))}}document.addEventListener("DOMContentLoaded",RocketElementorAnimation.run);</script>
 </body>
 
 
-<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1625816196 -->
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1651201156 -->
 </html>

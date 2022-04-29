@@ -12,13 +12,13 @@
 	<atom:link href="https://www.anyonecdn.com/feed/" rel="self" type="application/rss+xml" />
 	<link>https://www.anyonecdn.com/</link>
 	<description>Free Secure CDN</description>
-	<lastBuildDate>Fri, 09 Jul 2021 07:35:56 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Apr 2022 02:58:53 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=5.7.2</generator>
+	<generator>https://wordpress.org/?v=5.9.3</generator>
 
 <image>
 	<url>https://www.anyonecdn.com/wp-content/uploads/2021/06/android-icon-192x192-1-150x150.png</url>
